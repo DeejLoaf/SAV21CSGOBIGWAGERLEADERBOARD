@@ -1,67 +1,64 @@
-<script>
-const apiUrl = "https://csgobig.com/api/partners/getRefDetails/Sav21faqfaslkhafsa?from=1672534861000&to=1702383132000";
+// Define the API URL
+const apiUrl = "https://csgobig.com/api/partners/getRefDetails/Sav21faqfasklhafsa?from=1672534861000&to=1702383132000";
 
-// Storage for initial wagers at the start of each month
+// Initial storage for the total wagers at the start of each month
 let initialWagers = {};
 
-// Initialize monthly wager at the start of the month
-function initializeMonthlyWagers(data) {
+// Function to initialize initial wagers
+function initializeInitialWagers(data) {
     const currentDate = new Date();
-    const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-    const savedInitialWagers = localStorage.getItem('initialWagers');
+    const currentMonth = currentDate.getMonth();
+    const storedMonth = localStorage.getItem('storedMonth');
 
+    // Retrieve initial wagers from localStorage if they exist
+    const savedInitialWagers = localStorage.getItem('initialWagers');
     if (savedInitialWagers) {
         initialWagers = JSON.parse(savedInitialWagers);
     }
 
-    // Reset initial wagers if it's a new month
-    if (!localStorage.getItem('lastUpdatedMonth') || currentDate.getMonth() !== parseInt(localStorage.getItem('lastUpdatedMonth'))) {
+    // If it's a new month, reset initial wagers
+    if (!storedMonth || parseInt(storedMonth) !== currentMonth) {
         initialWagers = {};
-
         data.forEach(user => {
-            initialWagers[user.username] = user.total_wager;
+            initialWagers[user.id] = user.wagerTotal; // Store the total wager at the start of the month
         });
-
         localStorage.setItem('initialWagers', JSON.stringify(initialWagers));
-        localStorage.setItem('lastUpdatedMonth', currentDate.getMonth().toString());
+        localStorage.setItem('storedMonth', currentMonth.toString());
     }
 }
 
-// Fetch the data from the API
+// Fetch data from the API
 async function fetchData() {
     try {
         const response = await fetch(apiUrl);
-        const data = await response.json();
+        const result = await response.json();
 
-        // Initialize initial wagers
-        initializeMonthlyWagers(data);
-
-        // Calculate monthly wagers
-        const monthlyWagers = data.map(user => {
-            const startingWager = initialWagers[user.username] || 0;
-            const monthlyWager = user.total_wager - startingWager;
-            return {
-                username: user.username,
-                monthlyWager: monthlyWager > 0 ? monthlyWager : 0
-            };
-        });
-
-        // Sort by monthly wagers in descending order
-        monthlyWagers.sort((a, b) => b.monthlyWager - a.monthlyWager);
-
-        // Update the leaderboard
-        updateLeaderboard(monthlyWagers.slice(0, 10)); // Top 10 users
+        if (result.success && result.results.length > 0) {
+            const data = result.results;
+            initializeInitialWagers(data); // Initialize initial wagers
+            populateTable(data); // Populate table with data
+        }
     } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
     }
 }
 
-// Update the leaderboard display
-function updateLeaderboard(topWagerers) {
-    const tableBody = document.getElementById('leaderboardTable').querySelector('tbody');
-    tableBody.innerHTML = ''; // Clear the table
+// Populate the HTML table
+function populateTable(data) {
+    const tableBody = document.getElementById('wagerTableBody');
+    tableBody.innerHTML = ''; // Clear previous data
 
-    topWagerers.forEach((user, index) => {
+    // Sort data by monthly wager in descending order
+    const sortedData = data.map(user => {
+        const initialWager = initialWagers[user.id] || 0;
+        return {
+            username: user.name,
+            monthlyWager: user.wagerTotal - initialWager // Calculate monthly wager
+        };
+    }).sort((a, b) => b.monthlyWager - a.monthlyWager);
+
+    // Display top 10 wagerers
+    sortedData.slice(0, 10).forEach((user, index) => {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${index + 1}</td>
@@ -72,9 +69,5 @@ function updateLeaderboard(topWagerers) {
     });
 }
 
-// Fetch data every 5 minutes
-setInterval(fetchData, 5 * 60 * 1000);
-
-// Initial fetch
+// Fetch data when the page loads
 fetchData();
-</script>
