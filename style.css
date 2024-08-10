@@ -47,6 +47,14 @@ body {
     font-weight: bold;
 }
 
+.header-background {
+    background-image: url('https://raw.githubusercontent.com/DeejLoaf/SAV21CSGOBIGWAGERLEADERBOARD/main/CSGOBIGLEADERBOARDHEADER.png');
+    background-size: cover; /* Ensures the image covers the entire header */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    height: 100px; /* Adjust the height as needed */
+}
+
 @media (max-width: 600px) {
     .leaderboard {
         width: 100%;
@@ -70,3 +78,4 @@ body {
         font-size: 0.8rem;
     }
 }
+
