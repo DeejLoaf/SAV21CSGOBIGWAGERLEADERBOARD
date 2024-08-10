@@ -18,6 +18,15 @@ async function fetchAndDisplayLeaderboard() {
             throw new Error('Invalid data structure: "results" is undefined or not an array');
         }
 
+        // Check the structure of the first item to ensure it has the expected properties
+        if (data.results.length > 0) {
+            const firstItem = data.results[0];
+            if (typeof firstItem.name === 'undefined' || typeof firstItem.wagerTotal === 'undefined') {
+                console.error('Unexpected item structure:', firstItem);
+                throw new Error('Unexpected item structure in "results" array');
+            }
+        }
+
         // Map the data to extract the necessary fields
         const users = data.results.map(user => ({
             username: user.name,
