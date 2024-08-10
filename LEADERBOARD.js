@@ -1,6 +1,3 @@
-const corsProxy = 'https://api.allorigins.win/get?url='; // Alternative public CORS proxy
-const apiUrl = `${corsProxy}${encodeURIComponent('https://csgobig.com/api/partners/getRefDetails/Sav21faqfaslkhafsa?from=1672534861000&to=1702383132000')}`;
-
 async function fetchAndDisplayLeaderboard() {
     try {
         // Fetch the data from the API using the proxy
@@ -15,14 +12,14 @@ async function fetchAndDisplayLeaderboard() {
 
         console.log('API Response:', data); // Log the entire API response for debugging
 
-        // Check if 'wagers' exists and is an array
-        if (!data || !Array.isArray(data.wagers)) {
+        // Check if 'results' exists and is an array
+        if (!data.results || !Array.isArray(data.results)) {
             console.error('Invalid data structure:', data);
-            throw new Error('Invalid data structure: "wagers" is undefined or not an array');
+            throw new Error('Invalid data structure: "results" is undefined or not an array');
         }
 
         // Map the data to extract the necessary fields
-        const users = data.wagers.map(user => ({
+        const users = data.results.map(user => ({
             username: user.name,
             totalWager: user.wagerTotal
         }));
@@ -66,7 +63,3 @@ async function fetchAndDisplayLeaderboard() {
 
 // Call the function to fetch and display leaderboard on page load
 fetchAndDisplayLeaderboard();
-
-// Call the function to fetch and display leaderboard on page load
-fetchAndDisplayLeaderboard();
-
