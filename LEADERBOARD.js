@@ -43,7 +43,7 @@ async function fetchAndDisplayLeaderboard() {
         const top10Users = users.slice(0, 10);
 
         // Define the prize values
-        const prizes = ['$10', '$9', '$8', '$7', '$6', '$5', '$4', '$3', '$2', '$1'];
+        const prizes = ['$1500', '$700', '$400', '$200', '$50', '$50', '$25', '$25', '$10', '$10'];
 
         // Get the table body element
         const tbody = document.querySelector('#leaderboardTable tbody');
