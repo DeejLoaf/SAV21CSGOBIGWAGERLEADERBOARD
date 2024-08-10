@@ -1,12 +1,17 @@
-// Use a CORS proxy to bypass the CORS issue
-const corsProxy = 'https://cors-anywhere.herokuapp.com/'; // This is a public CORS proxy
-const apiUrl = `${corsProxy}https://csgobig.com/api/partners/getRefDetails/Sav21faqfaslkhafsa?from=1672534861000&to=1702383132000`;
+const corsProxy = 'https://api.allorigins.win/get?url='; // Alternative public CORS proxy
+const apiUrl = `${corsProxy}${encodeURIComponent('https://csgobig.com/api/partners/getRefDetails/Sav21faqfaslkhafsa?from=1672534861000&to=1702383132000')}`;
 
 async function fetchAndDisplayLeaderboard() {
     try {
         // Fetch the data from the API using the proxy
         const response = await fetch(apiUrl);
-        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const responseData = await response.json();
+        const data = JSON.parse(responseData.contents); // If using allorigins or a similar proxy
 
         // Assuming data.wagers contains an array of user objects with 'username' and 'totalWager' properties
         const users = data.wagers;
@@ -44,6 +49,8 @@ async function fetchAndDisplayLeaderboard() {
 
     } catch (error) {
         console.error('Error fetching or displaying leaderboard:', error);
+        // Display a user-friendly error message
+        document.querySelector('.leaderboard').innerHTML = '<p>Failed to load leaderboard data. Please try again later.</p>';
     }
 }
 
