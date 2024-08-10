@@ -28,6 +28,9 @@ async function fetchData() {
 
         // Get the table body element
         const tbody = document.querySelector('#leaderboardTable tbody');
+        
+        // Clear existing rows
+        tbody.innerHTML = '';
 
         // Populate the table with the fetched data
         for (let i = 0; i < 10; i++) {
@@ -45,9 +48,6 @@ async function fetchData() {
         console.error('Error fetching data:', error);
     }
 }
-
-// Call the function to fetch data and populate the table
-fetchData();
 
 // Call the function to fetch data and populate the table
 fetchData();
