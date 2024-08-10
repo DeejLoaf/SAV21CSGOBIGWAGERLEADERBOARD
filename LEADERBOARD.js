@@ -13,10 +13,11 @@ async function fetchAndDisplayLeaderboard() {
         const responseData = await response.json();
         const data = JSON.parse(responseData.contents);
 
-        console.log('API Response:', data); // Log the API response for debugging
+        console.log('API Response:', data); // Log the entire API response for debugging
 
-        // Ensure that 'wagers' is defined and an array
-        if (!data.wagers || !Array.isArray(data.wagers)) {
+        // Check if 'wagers' exists and is an array
+        if (!data || !Array.isArray(data.wagers)) {
+            console.error('Invalid data structure:', data);
             throw new Error('Invalid data structure: "wagers" is undefined or not an array');
         }
 
@@ -62,6 +63,9 @@ async function fetchAndDisplayLeaderboard() {
         document.querySelector('.leaderboard').innerHTML = '<p>Failed to load leaderboard data. Please try again later.</p>';
     }
 }
+
+// Call the function to fetch and display leaderboard on page load
+fetchAndDisplayLeaderboard();
 
 // Call the function to fetch and display leaderboard on page load
 fetchAndDisplayLeaderboard();
