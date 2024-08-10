@@ -4,7 +4,17 @@ const apiUrl = 'https://script.google.com/macros/library/d/1DsH_HyH5b8OGaHVC3VjX
 async function fetchData() {
     try {
         const response = await fetch(proxyUrl + apiUrl);
-        const data = await response.json();
+
+        // Check the response status and type
+        console.log('Response Status:', response.status);
+        console.log('Response Type:', response.headers.get('Content-Type'));
+
+        // Log the response text
+        const text = await response.text();
+        console.log('Response Text:', text);
+
+        // Attempt to parse the response as JSON
+        const data = JSON.parse(text);
 
         const usernames = [
             data['A2'], data['A3'], data['A4'], data['A5'], data['A6'],
