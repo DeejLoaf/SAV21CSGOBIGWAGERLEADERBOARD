@@ -5,12 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Top 10 Monthly Wagerers</title>
     <link rel="stylesheet" href="style.css"> <!-- Make sure this path is correct -->
+    <style>
+        .header-background {
+            background-image: url('CSGOBIGLEADERBOARDHEADER.png');
+            background-size: cover; /* Ensures the image covers the entire header */
+            background-position: center; /* Centers the image */
+            background-repeat: no-repeat; /* Prevents the image from repeating */
+        }
+    </style>
 </head>
 <body>
     <div class="leaderboard">
         <h2>Top 10 Monthly Wagerers</h2>
         <table id="leaderboardTable">
-            <thead>
+            <thead class="header-background">
                 <tr>
                     <th>Rank</th>
                     <th>Username</th>
