@@ -12,6 +12,9 @@ async function fetchAndDisplayLeaderboard() {
 
         const responseData = await response.json();
 
+        // Log the API response for debugging
+        console.log('API Response:', responseData);
+
         // Transform the data
         const data = responseData; // No need for JSON.parse since the data is already an object
 
@@ -29,6 +32,12 @@ async function fetchAndDisplayLeaderboard() {
             prizes.push(data[`D${i}`]);
         }
 
+        // Log the extracted data for debugging
+        console.log('Usernames:', usernames);
+        console.log('Wagers:', wagers);
+        console.log('BET-IDs:', betIds);
+        console.log('Prizes:', prizes);
+
         // Create a list of user objects
         const users = usernames.map((username, index) => ({
             username: username,
@@ -36,6 +45,9 @@ async function fetchAndDisplayLeaderboard() {
             betId: betIds[index],
             prize: prizes[index]
         }));
+
+        // Log the user objects for debugging
+        console.log('Users:', users);
 
         // Get the table body element
         const tbody = document.querySelector('#leaderboardTable tbody');
@@ -60,7 +72,7 @@ async function fetchAndDisplayLeaderboard() {
             row.appendChild(wagerCell);
 
             const betIdCell = document.createElement('td');
-            betIdCell.textContent = user.betId;
+            betIdCell.textContent = user.betId; // Ensure this is 'betId'
             row.appendChild(betIdCell);
 
             const prizeCell = document.createElement('td');
