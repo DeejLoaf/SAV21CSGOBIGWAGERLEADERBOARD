@@ -40,7 +40,7 @@ async function fetchData() {
                 <td>${usernames[i]}</td>
                 <td>${multi[i]}</td>
                 <td><a href="${betIds[i]}" target="_blank">View Bet</a></td>
-                <td>${prizes[i]}</td> <!-- Display prize data here -->
+                <td>$${parseFloat(prizes[i]).toFixed(2)}</td> <!-- Display prize data with dollar sign -->
             `;
             tbody.appendChild(row);
         }
