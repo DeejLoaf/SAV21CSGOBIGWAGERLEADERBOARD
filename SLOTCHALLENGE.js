@@ -21,6 +21,10 @@ async function fetchData() {
             data['C2'], data['C3'], data['C4'], data['C5'], data['C6'],
             data['C7'], data['C8'], data['C9'], data['C10'], data['C11']
         ];
+        const prizes = [
+            data['D2'], data['D3'], data['D4'], data['D5'], data['D6'],
+            data['D7'], data['D8'], data['D9'], data['D10'], data['D11']
+        ];
 
         // Get the table body element
         const tbody = document.querySelector('#leaderboardTable tbody');
@@ -33,7 +37,7 @@ async function fetchData() {
                 <td>${usernames[i]}</td>
                 <td>${multi[i]}</td>
                 <td><a href="${betIds[i]}" target="_blank">View Bet</a></td>
-                <td>${(multi[i] * 0.1).toFixed(2)}</td> <!-- Example prize calculation -->
+                <td>${prizes[i]}</td> <!-- Display prize data here -->
             `;
             tbody.appendChild(row);
         }
@@ -41,6 +45,9 @@ async function fetchData() {
         console.error('Error fetching data:', error);
     }
 }
+
+// Call the function to fetch data and populate the table
+fetchData();
 
 // Call the function to fetch data and populate the table
 fetchData();
