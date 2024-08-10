@@ -1,9 +1,10 @@
-// URL of the API
-const apiUrl = 'https://csgobig.com/api/partners/getRefDetails/Sav21faqfaslkhafsa?from=1672534861000&to=1702383132000';
+// Use a CORS proxy to bypass the CORS issue
+const corsProxy = 'https://cors-anywhere.herokuapp.com/'; // This is a public CORS proxy
+const apiUrl = `${corsProxy}https://csgobig.com/api/partners/getRefDetails/Sav21faqfaslkhafsa?from=1672534861000&to=1702383132000`;
 
-// Function to fetch data from the API and process it
 async function fetchAndDisplayLeaderboard() {
     try {
+        // Fetch the data from the API using the proxy
         const response = await fetch(apiUrl);
         const data = await response.json();
 
@@ -19,10 +20,13 @@ async function fetchAndDisplayLeaderboard() {
         // Get the table body element
         const tbody = document.querySelector('#leaderboardTable tbody');
 
+        // Clear any existing rows
+        tbody.innerHTML = '';
+
         // Populate the table with the top 10 users
         top10Users.forEach((user, index) => {
             const row = document.createElement('tr');
-            
+
             const rankCell = document.createElement('td');
             rankCell.textContent = index + 1;
             row.appendChild(rankCell);
