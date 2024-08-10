@@ -27,7 +27,7 @@ async function fetchData() {
                 <td>${i + 1}</td>
                 <td>${usernames[i]}</td>
                 <td>${multi[i]}</td>
-                <td><a href="${betIds[i]}" target="_blank">${betIds[i]}</a></td>
+                <td><a href="${betIds[i]}" target="_blank">View Bet</a></td>
                 <td>${(multi[i] * 0.1).toFixed(2)}</td>
             `;
             tbody.appendChild(row);
