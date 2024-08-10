@@ -1,34 +1,31 @@
-const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+// Define the API URL and proxy
 const apiUrl = 'https://script.google.com/macros/library/d/1DsH_HyH5b8OGaHVC3VjXms-9Oq7xDPim0hlRZunAIUUDKOTRAic1m3kh/10';
+const proxyUrl = 'https://api.allorigins.win/get?url=';
 
 async function fetchData() {
     try {
-        const response = await fetch(proxyUrl + apiUrl);
+        // Fetch the data using the All Origins proxy
+        const response = await fetch(proxyUrl + encodeURIComponent(apiUrl));
+        const data = await response.json();
 
-        // Check the response status and type
-        console.log('Response Status:', response.status);
-        console.log('Response Type:', response.headers.get('Content-Type'));
+        // Parse the JSON data returned by All Origins
+        const parsedData = JSON.parse(data.contents);
 
-        // Log the response text
-        const text = await response.text();
-        console.log('Response Text:', text);
-
-        // Attempt to parse the response as JSON
-        const data = JSON.parse(text);
-
+        // Extract relevant data
         const usernames = [
-            data['A2'], data['A3'], data['A4'], data['A5'], data['A6'],
-            data['A7'], data['A8'], data['A9'], data['A10'], data['A11']
+            parsedData['A2'], parsedData['A3'], parsedData['A4'], parsedData['A5'], parsedData['A6'],
+            parsedData['A7'], parsedData['A8'], parsedData['A9'], parsedData['A10'], parsedData['A11']
         ];
         const multi = [
-            data['B2'], data['B3'], data['B4'], data['B5'], data['B6'],
-            data['B7'], data['B8'], data['B9'], data['B10'], data['B11']
+            parsedData['B2'], parsedData['B3'], parsedData['B4'], parsedData['B5'], parsedData['B6'],
+            parsedData['B7'], parsedData['B8'], parsedData['B9'], parsedData['B10'], parsedData['B11']
         ];
         const betIds = [
-            data['C2'], data['C3'], data['C4'], data['C5'], data['C6'],
-            data['C7'], data['C8'], data['C9'], data['C10'], data['C11']
+            parsedData['C2'], parsedData['C3'], parsedData['C4'], parsedData['C5'], parsedData['C6'],
+            parsedData['C7'], parsedData['C8'], parsedData['C9'], parsedData['C10'], parsedData['C11']
         ];
 
+        // Populate the table with the fetched data
         const tbody = document.querySelector('#leaderboardTable tbody');
 
         for (let i = 0; i < 10; i++) {
