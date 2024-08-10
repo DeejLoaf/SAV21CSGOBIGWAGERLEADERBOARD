@@ -42,13 +42,16 @@ async function fetchAndDisplayLeaderboard() {
         // Get the top 10 users
         const top10Users = users.slice(0, 10);
 
+        // Define the prize values
+        const prizes = ['$10', '$9', '$8', '$7', '$6', '$5', '$4', '$3', '$2', '$1'];
+
         // Get the table body element
         const tbody = document.querySelector('#leaderboardTable tbody');
 
         // Clear any existing rows
         tbody.innerHTML = '';
 
-        // Populate the table with the top 10 users
+        // Populate the table with the top 10 users and their prizes
         top10Users.forEach((user, index) => {
             const row = document.createElement('tr');
 
@@ -64,6 +67,10 @@ async function fetchAndDisplayLeaderboard() {
             wagerCell.textContent = user.totalWager.toFixed(2);
             row.appendChild(wagerCell);
 
+            const prizeCell = document.createElement('td');
+            prizeCell.textContent = prizes[index]; // Add the prize value
+            row.appendChild(prizeCell);
+
             tbody.appendChild(row);
         });
 
@@ -75,3 +82,4 @@ async function fetchAndDisplayLeaderboard() {
 
 // Call the function to fetch and display leaderboard on page load
 fetchAndDisplayLeaderboard();
+
