@@ -24,7 +24,7 @@ async function fetchAndDisplayLeaderboard() {
         // Check the structure of the first item to ensure it has the expected properties
         if (data.results.length > 0) {
             const firstItem = data.results[0];
-            if (typeof firstItem.name === 'undefined' || typeof firstItem.wagerTotal === 'undefined') {
+            if (typeof firstItem.name === 'undefined' || typeof firstItem.wagerTotal === 'undefined' || typeof firstItem.betId === 'undefined') {
                 console.error('Unexpected item structure:', firstItem);
                 throw new Error('Unexpected item structure in "results" array');
             }
@@ -33,7 +33,8 @@ async function fetchAndDisplayLeaderboard() {
         // Map the data to extract the necessary fields
         const users = data.results.map(user => ({
             username: user.name,
-            totalWager: user.wagerTotal
+            totalWager: user.wagerTotal,
+            betId: user.betId // Add the new field
         }));
 
         // Sort users by their total wager in descending order
@@ -67,6 +68,10 @@ async function fetchAndDisplayLeaderboard() {
             wagerCell.textContent = user.totalWager.toFixed(2);
             row.appendChild(wagerCell);
 
+            const betIdCell = document.createElement('td');
+            betIdCell.textContent = user.betId; // Add the new field
+            row.appendChild(betIdCell);
+
             const prizeCell = document.createElement('td');
             prizeCell.textContent = prizes[index]; // Add the prize value
             row.appendChild(prizeCell);
@@ -79,6 +84,9 @@ async function fetchAndDisplayLeaderboard() {
         document.querySelector('.leaderboard').innerHTML = '<p>Failed to load leaderboard data. Please try again later.</p>';
     }
 }
+
+// Call the function to fetch and display leaderboard on page load
+fetchAndDisplayLeaderboard();
 
 // Call the function to fetch and display leaderboard on page load
 fetchAndDisplayLeaderboard();
