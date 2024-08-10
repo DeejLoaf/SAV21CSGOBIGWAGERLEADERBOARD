@@ -1,73 +1,47 @@
-// Define the API URL
-const apiUrl = "https://csgobig.com/api/partners/getRefDetails/Sav21faqfaslkhafsa?from=1672534861000&to=1702383132000";
+// URL of the API
+const apiUrl = 'https://csgobig.com/api/partners/getRefDetails/Sav21faqfaslkhafsa?from=1672534861000&to=1702383132000';
 
-// Initial storage for the total wagers at the start of each month
-let initialWagers = {};
-
-// Function to initialize initial wagers
-function initializeInitialWagers(data) {
-    const currentDate = new Date();
-    const currentMonth = currentDate.getMonth();
-    const storedMonth = localStorage.getItem('storedMonth');
-
-    // Retrieve initial wagers from localStorage if they exist
-    const savedInitialWagers = localStorage.getItem('initialWagers');
-    if (savedInitialWagers) {
-        initialWagers = JSON.parse(savedInitialWagers);
-    }
-
-    // If it's a new month, reset initial wagers
-    if (!storedMonth || parseInt(storedMonth) !== currentMonth) {
-        initialWagers = {};
-        data.forEach(user => {
-            initialWagers[user.id] = user.wagerTotal; // Store the total wager at the start of the month
-        });
-        localStorage.setItem('initialWagers', JSON.stringify(initialWagers));
-        localStorage.setItem('storedMonth', currentMonth.toString());
-    }
-}
-
-// Fetch data from the API
-async function fetchData() {
+// Function to fetch data from the API and process it
+async function fetchAndDisplayLeaderboard() {
     try {
         const response = await fetch(apiUrl);
-        const result = await response.json();
+        const data = await response.json();
 
-        if (result.success && result.results.length > 0) {
-            const data = result.results;
-            initializeInitialWagers(data); // Initialize initial wagers
-            populateTable(data); // Populate table with data
-        }
+        // Assuming data.wagers contains an array of user objects with 'username' and 'totalWager' properties
+        const users = data.wagers;
+
+        // Sort users by their total wager in descending order
+        users.sort((a, b) => b.totalWager - a.totalWager);
+
+        // Get the top 10 users
+        const top10Users = users.slice(0, 10);
+
+        // Get the table body element
+        const tbody = document.querySelector('#leaderboardTable tbody');
+
+        // Populate the table with the top 10 users
+        top10Users.forEach((user, index) => {
+            const row = document.createElement('tr');
+            
+            const rankCell = document.createElement('td');
+            rankCell.textContent = index + 1;
+            row.appendChild(rankCell);
+
+            const usernameCell = document.createElement('td');
+            usernameCell.textContent = user.username;
+            row.appendChild(usernameCell);
+
+            const wagerCell = document.createElement('td');
+            wagerCell.textContent = user.totalWager.toFixed(2); // Assuming totalWager is a number
+            row.appendChild(wagerCell);
+
+            tbody.appendChild(row);
+        });
+
     } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error('Error fetching or displaying leaderboard:', error);
     }
 }
 
-// Populate the HTML table
-function populateTable(data) {
-    const tableBody = document.getElementById('wagerTableBody');
-    tableBody.innerHTML = ''; // Clear previous data
-
-    // Sort data by monthly wager in descending order
-    const sortedData = data.map(user => {
-        const initialWager = initialWagers[user.id] || 0;
-        return {
-            username: user.name,
-            monthlyWager: user.wagerTotal - initialWager // Calculate monthly wager
-        };
-    }).sort((a, b) => b.monthlyWager - a.monthlyWager);
-
-    // Display top 10 wagerers
-    sortedData.slice(0, 10).forEach((user, index) => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${user.username}</td>
-            <td>${user.monthlyWager.toFixed(2)}</td>
-        `;
-        tableBody.appendChild(row);
-    });
-}
-
-// Fetch data when the page loads
-fetchData();
+// Call the function to fetch and display leaderboard on page load
+fetchAndDisplayLeaderboard();
