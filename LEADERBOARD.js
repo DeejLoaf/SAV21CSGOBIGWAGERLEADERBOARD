@@ -1,5 +1,6 @@
 // Define the API URL
 const apiUrl = 'https://api.allorigins.win/get?url=https%3A//csgobig.com/api/partners/getRefDetails/Sav21faqfaslkhafsa%3Ffrom%3D1672534861000%26to%3D1702383132000';
+
 async function fetchAndDisplayLeaderboard() {
     try {
         // Fetch the data from the API using the proxy
@@ -74,4 +75,3 @@ async function fetchAndDisplayLeaderboard() {
 
 // Call the function to fetch and display leaderboard on page load
 fetchAndDisplayLeaderboard();
-
