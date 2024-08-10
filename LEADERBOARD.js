@@ -11,10 +11,20 @@ async function fetchAndDisplayLeaderboard() {
         }
 
         const responseData = await response.json();
-        const data = JSON.parse(responseData.contents); // If using allorigins or a similar proxy
+        const data = JSON.parse(responseData.contents);
 
-        // Assuming data.wagers contains an array of user objects with 'username' and 'totalWager' properties
-        const users = data.wagers;
+        console.log('API Response:', data); // Log the API response for debugging
+
+        // Ensure that 'wagers' is defined and an array
+        if (!data.wagers || !Array.isArray(data.wagers)) {
+            throw new Error('Invalid data structure: "wagers" is undefined or not an array');
+        }
+
+        // Map the data to extract the necessary fields
+        const users = data.wagers.map(user => ({
+            username: user.name,
+            totalWager: user.wagerTotal
+        }));
 
         // Sort users by their total wager in descending order
         users.sort((a, b) => b.totalWager - a.totalWager);
@@ -41,7 +51,7 @@ async function fetchAndDisplayLeaderboard() {
             row.appendChild(usernameCell);
 
             const wagerCell = document.createElement('td');
-            wagerCell.textContent = user.totalWager.toFixed(2); // Assuming totalWager is a number
+            wagerCell.textContent = user.totalWager.toFixed(2);
             row.appendChild(wagerCell);
 
             tbody.appendChild(row);
@@ -49,10 +59,10 @@ async function fetchAndDisplayLeaderboard() {
 
     } catch (error) {
         console.error('Error fetching or displaying leaderboard:', error);
-        // Display a user-friendly error message
         document.querySelector('.leaderboard').innerHTML = '<p>Failed to load leaderboard data. Please try again later.</p>';
     }
 }
 
 // Call the function to fetch and display leaderboard on page load
 fetchAndDisplayLeaderboard();
+
