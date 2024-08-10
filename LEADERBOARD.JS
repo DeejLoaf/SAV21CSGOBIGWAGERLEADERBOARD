@@ -1,5 +1,5 @@
 // Define the API URL
-const apiUrl = "https://csgobig.com/api/partners/getRefDetails/Sav21faqfasklhafsa?from=1672534861000&to=1702383132000";
+const apiUrl = "https://csgobig.com/api/partners/getRefDetails/Sav21faqfaslkhafsa?from=1672534861000&to=1702383132000";
 
 // Initial storage for the total wagers at the start of each month
 let initialWagers = {};
