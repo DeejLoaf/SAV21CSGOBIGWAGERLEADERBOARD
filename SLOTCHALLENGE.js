@@ -1,11 +1,14 @@
-const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+// Define the API URL
 const apiUrl = 'https://script.google.com/macros/library/d/1DsH_HyH5b8OGaHVC3VjXms-9Oq7xDPim0hlRZunAIUUDKOTRAic1m3kh/10';
 
+// Function to fetch data from the API and populate the table
 async function fetchData() {
     try {
-        const response = await fetch(proxyUrl + apiUrl);
+        // Fetch data from the API
+        const response = await fetch(apiUrl);
         const data = await response.json();
 
+        // Extract values from the API response
         const usernames = [
             data['A2'], data['A3'], data['A4'], data['A5'], data['A6'],
             data['A7'], data['A8'], data['A9'], data['A10'], data['A11']
@@ -19,8 +22,10 @@ async function fetchData() {
             data['C7'], data['C8'], data['C9'], data['C10'], data['C11']
         ];
 
+        // Get the table body element
         const tbody = document.querySelector('#leaderboardTable tbody');
 
+        // Populate the table with the fetched data
         for (let i = 0; i < 10; i++) {
             const row = document.createElement('tr');
             row.innerHTML = `
@@ -28,7 +33,7 @@ async function fetchData() {
                 <td>${usernames[i]}</td>
                 <td>${multi[i]}</td>
                 <td><a href="${betIds[i]}" target="_blank">View Bet</a></td>
-                <td>${(multi[i] * 0.1).toFixed(2)}</td>
+                <td>${(multi[i] * 0.1).toFixed(2)}</td> <!-- Example prize calculation -->
             `;
             tbody.appendChild(row);
         }
@@ -37,5 +42,5 @@ async function fetchData() {
     }
 }
 
+// Call the function to fetch data and populate the table
 fetchData();
-
