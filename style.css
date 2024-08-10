@@ -60,7 +60,6 @@ body {
     }
 }
 
-/* Additional media queries for smaller screens */
 @media (max-width: 400px) {
     .leaderboard h2 {
         font-size: 1rem;
