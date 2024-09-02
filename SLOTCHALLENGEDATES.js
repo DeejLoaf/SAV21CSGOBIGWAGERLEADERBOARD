@@ -65,6 +65,7 @@
             if (distance < 0) {
                 clearInterval(interval);
                 element.innerHTML = `
+                    <div><strong>LEADERBOARD RESETS:</strong></div>
                     <div>RESETTING SOON</div>
                     <div>GET READY!</div>
                 `;
@@ -78,7 +79,9 @@
 
             const isUnder12Hours = (days === 0 && hours < 12);
 
+            // Preserve existing HTML and append the countdown
             element.innerHTML = `
+                <div><strong>LEADERBOARD RESETS:</strong></div>
                 <div style="font-size: 24px; ${isUnder12Hours ? 'color: red;' : ''}">
                     ${days}d ${hours}h ${minutes}m ${seconds}s
                 </div>
@@ -90,3 +93,4 @@
     document.addEventListener('DOMContentLoaded', fetchData);
 
 })();
+
