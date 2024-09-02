@@ -2,22 +2,18 @@
     // Define the API URL within the IIFE to avoid conflicts
     const apiUrl = 'https://script.google.com/macros/s/AKfycbzjYUSjy-IJVG30HuvizkJCjrdquTxuqRVf3eUJMP-BhppspOXKUimjLgBj1QcF4Ew/exec';
 
-    // Function to fetch data from the API and populate the START and END boxes with countdowns
+    // Function to fetch data from the API and populate the countdown box
     async function fetchData() {
         try {
             // Fetch data from the API
             const response = await fetch(apiUrl);
             const data = await response.json();
 
-            // Extract and parse date and time for the START box
-            const startDateTime = parseDateTime(data['E2'], data['F2']);
-            
             // Extract and parse date and time for the END box
             const endDateTime = parseDateTime(data['E4'], data['F4']);
 
-            // Update the countdown timers
-            updateCountdown('startBox', startDateTime);
-            updateCountdown('endBox', endDateTime);
+            // Update the countdown timer
+            updateCountdown('countdownBox', endDateTime);
 
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -57,13 +53,22 @@
     // Function to update the countdown in a given element
     function updateCountdown(elementId, targetTime) {
         const element = document.getElementById(elementId);
+        if (!element) {
+            console.error(`Element with ID ${elementId} not found.`);
+            return;
+        }
+
         const interval = setInterval(() => {
             const now = new Date();
             const distance = targetTime - now;
 
             if (distance < 0) {
                 clearInterval(interval);
-                element.innerHTML = `<div><strong>${elementId === 'startBox' ? 'START' : 'END'}</strong></div><div>Time's up!</div>`;
+                element.innerHTML = `
+                    <div><strong>SLOT CHALLENGE</strong></div>
+                    <div>RESETTING SOON</div>
+                    <div>GET READY!</div>
+                `;
                 return;
             }
 
@@ -73,13 +78,13 @@
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
             element.innerHTML = `
-                <div><strong>${elementId === 'startBox' ? 'START' : 'END'}</strong></div>
+                <div><strong>COUNTDOWN</strong></div>
                 <div>${days}d ${hours}h ${minutes}m ${seconds}s</div>
             `;
         }, 1000);
     }
 
-    // Call the function to fetch data and start the countdown
-    fetchData();
+    // Ensure the script is loaded and then call the function to fetch data
+    document.addEventListener('DOMContentLoaded', fetchData);
 
 })();
