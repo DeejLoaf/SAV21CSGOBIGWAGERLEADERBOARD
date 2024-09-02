@@ -58,14 +58,21 @@
             return;
         }
 
+        // Set initial static content with placeholder for dynamic countdown
+        element.innerHTML = `
+            <div><strong>LEADERBOARD RESETS:</strong></div>
+            <div id="countdownDisplay" style="font-size: 24px;"></div>
+        `;
+
+        const countdownDisplay = document.getElementById('countdownDisplay');
+
         const interval = setInterval(() => {
             const now = new Date();
             const distance = targetTime - now;
 
             if (distance < 0) {
                 clearInterval(interval);
-                element.innerHTML = `
-                    <div><strong>LEADERBOARD RESETS:</strong></div>
+                countdownDisplay.innerHTML = `
                     <div>RESETTING SOON</div>
                     <div>GET READY!</div>
                 `;
@@ -79,13 +86,14 @@
 
             const isUnder12Hours = (days === 0 && hours < 12);
 
-            // Preserve existing HTML and append the countdown
-            element.innerHTML = `
-                <div><strong>LEADERBOARD RESETS:</strong></div>
-                <div style="font-size: 24px; ${isUnder12Hours ? 'color: red;' : ''}">
-                    ${days}d ${hours}h ${minutes}m ${seconds}s
-                </div>
+            countdownDisplay.innerHTML = `
+                ${days}d ${hours}h ${minutes}m ${seconds}s
             `;
+            if (isUnder12Hours) {
+                countdownDisplay.style.color = 'red';
+            } else {
+                countdownDisplay.style.color = 'black';
+            }
         }, 1000);
     }
 
@@ -93,4 +101,3 @@
     document.addEventListener('DOMContentLoaded', fetchData);
 
 })();
-
