@@ -11,22 +11,16 @@ async function fetchTopUser() {
         // Log the fetched data to the console for debugging
         console.log('Fetched data:', data);
 
-        // Extract usernames from the API response
-        const usernames = [
-            data['A2'], data['A3'], data['A4'], data['A5'], data['A6'],
-            data['A7'], data['A8'], data['A9'], data['A10'], data['A11']
-        ];
-
-        // Get the top user's name (assuming the first item is the top user)
-        const topUser = usernames[0] || 'Unknown';
+        // Extract values from the API response
+        const topUser = data['A2'] || 'Unknown';
+        const topMulti = data['B2'] || 'N/A';
         
-        console.log('Top user:', topUser); // Log the top user for debugging
+        // Log the top user and top multi for debugging
+        console.log('Top user:', topUser);
+        console.log('Top multi:', topMulti);
 
-        // Update the top user box
-        document.getElementById('topUserBox').innerHTML = `
-            <div><strong>TOP USER:</strong></div>
-            <div style="font-size: 24px;">${topUser}</div>
-        `;
+        // Update the top user box with the formatted value
+        document.getElementById('topUserInfo').textContent = `${topUser} - ${topMulti}`;
     } catch (error) {
         console.error('Error fetching top user data:', error);
     }
@@ -34,3 +28,4 @@ async function fetchTopUser() {
 
 // Call the function to fetch data and update the top user box
 fetchTopUser();
+
