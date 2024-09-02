@@ -7,6 +7,9 @@ async function fetchTopUser() {
         // Fetch data from the API
         const response = await fetch(apiUrl);
         const data = await response.json();
+        
+        // Log the fetched data to the console for debugging
+        console.log('Fetched data:', data);
 
         // Extract usernames from the API response
         const usernames = [
@@ -16,6 +19,8 @@ async function fetchTopUser() {
 
         // Get the top user's name (assuming the first item is the top user)
         const topUser = usernames[0] || 'Unknown';
+        
+        console.log('Top user:', topUser); // Log the top user for debugging
 
         // Update the top user box
         document.getElementById('topUserBox').innerHTML = `
@@ -29,4 +34,3 @@ async function fetchTopUser() {
 
 // Call the function to fetch data and update the top user box
 fetchTopUser();
-
