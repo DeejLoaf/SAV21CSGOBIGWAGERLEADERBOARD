@@ -39,7 +39,7 @@
                 row.innerHTML = `
                     <td>${i + 1}</td>
                     <td>${usernames[i]}</td>
-                    <td>${multi[i]}</td>
+                    <td>${multi[i]}x</td> <!-- Add 'x' after multi value -->
                     <td><a href="${betIds[i]}" target="_blank">View Bet</a></td>
                     <td>$${parseFloat(prizes[i]).toFixed(2)}</td> <!-- Display prize data with dollar sign -->
                 `;
@@ -53,5 +53,4 @@
     // Call the function to fetch data and populate the table
     fetchData();
 
-})();
-
+})(); 
