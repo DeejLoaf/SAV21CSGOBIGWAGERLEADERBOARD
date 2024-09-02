@@ -65,7 +65,6 @@
             if (distance < 0) {
                 clearInterval(interval);
                 element.innerHTML = `
-                    <div><strong>SLOT CHALLENGE</strong></div>
                     <div>RESETTING SOON</div>
                     <div>GET READY!</div>
                 `;
@@ -80,7 +79,6 @@
             const isUnder12Hours = (days === 0 && hours < 12);
 
             element.innerHTML = `
-                <div><strong>TOP 10 RESET IN:</strong></div>
                 <div style="font-size: 24px; ${isUnder12Hours ? 'color: red;' : ''}">
                     ${days}d ${hours}h ${minutes}m ${seconds}s
                 </div>
