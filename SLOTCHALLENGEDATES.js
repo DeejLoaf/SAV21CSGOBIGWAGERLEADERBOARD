@@ -80,7 +80,7 @@
             const isUnder12Hours = (days === 0 && hours < 12);
 
             element.innerHTML = `
-                <div><strong>SLOT CHALLENGE RESETS IN :</strong></div>
+                <div><strong>CHALLENGE RESET IN:</strong></div>
                 <div style="font-size: 24px; ${isUnder12Hours ? 'color: red;' : ''}">
                     ${days}d ${hours}h ${minutes}m ${seconds}s
                 </div>
