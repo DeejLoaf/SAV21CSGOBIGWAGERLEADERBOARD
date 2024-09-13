@@ -14,8 +14,8 @@ async function fetchAndDisplayLeaderboard() {
             body: JSON.stringify({
                 "invitationCode": "sav",
                 "accessKey": "a1uY00IAM6surRWE",
-                "beginTimestamp": 1723420800000, // Replace with your required timestamp
-                "endTimestamp": 1726185599999    // Replace with your required timestamp
+                "beginTimestamp": 0, // Replace with your required timestamp
+                "endTimestamp": 0    // Replace with your required timestamp
             })
         });
 
