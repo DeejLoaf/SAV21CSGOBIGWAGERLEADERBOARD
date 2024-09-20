@@ -1,22 +1,11 @@
-
-// Define the API URL
-const apiUrl = 'https://bc.game/api/agent/open-api/kol/invitees/';
+// Define the API URL for your Google Sheets data
+const apiUrl = 'https://script.googleusercontent.com/macros/echo?user_content_key=I1yqw0C6Yo21WhD5KGlXs5NR1k3nqfvKmhLxSbCm99XJlP5KrsZGPwWSsMjKox2hSCSm8DKLv00OfNHenXAIjazPJk6ldyc7m5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnKq0DlNu78yxdgb-rrINvyBMTu_DnYPEPdYJUP3rVrBwPegCzs_8FQz22k7ZzEoAl-hvlUidHcLBu8tgrp4KrEcXSLoOc5Duqg&lib=M-oc_ToWrXe3ZGRbqKXnu3wfY0QbVsGWL'; // Replace with your web app URL
 
 async function fetchAndDisplayLeaderboard() {
     try {
         // Fetch the data from the new API
         const response = await fetch(apiUrl, {
-            method: 'POST', // API requires POST method
-            headers: {
-                'Origin': 'https://bc.game/',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                "invitationCode": "sav",
-                "accessKey": "a1uY00IAM6surRWE",
-                "beginTimestamp": 0, // Replace with your required timestamp
-                "endTimestamp": 100000000000    // Replace with your required timestamp
-            })
+            method: 'GET' // Use GET since we're fetching data
         });
 
         if (!response.ok) {
@@ -27,26 +16,24 @@ async function fetchAndDisplayLeaderboard() {
 
         console.log('API Response:', data); // Log the entire API response for debugging
 
-        // Check if 'data' exists and is an array (adjust this part based on the actual API response structure)
-        if (!data.data || !Array.isArray(data.data)) {
+        // Check if the response is an array
+        if (!Array.isArray(data)) {
             console.error('Invalid data structure:', data);
-            throw new Error('Invalid data structure: "data" is undefined or not an array');
+            throw new Error('Invalid data structure: response is not an array');
         }
 
-        // Map the data to extract the necessary fields
-        const users = data.data.map(user => ({
-            username: user.username,
-            totalWager: user.multi // Assuming 'multi' is the wager field in your new API
-        }));
+        // Sort users by their wager in descending order
+        data.sort((a, b) => b.wagerDifference - a.wagerDifference); // Adjust based on your API response fields
 
-        // Sort users by their total wager in descending order
-        users.sort((a, b) => b.totalWager - a.totalWager);
+        // Get the top 15 users
+        const top15Users = data.slice(0, 15);
 
-        // Get the top 10 users
-        const top10Users = users.slice(0, 10);
-
-        // Define the prize values
-        const prizes = ['$1500', '$700', '$400', '$200', '$50', '$50', '$25', '$25', '$10', '$10'];
+        // Define the prize values for the top 15 users
+        const prizes = [
+            '$2100', '$1000', '$650', '$400', '$250', 
+            '$175', '$100', '$90', '$75', '$50', 
+            '$50', '$20', '$20', '$10', '$10'
+        ];
 
         // Get the table body element
         const tbody = document.querySelector('#leaderboardTable tbody');
@@ -54,8 +41,8 @@ async function fetchAndDisplayLeaderboard() {
         // Clear any existing rows
         tbody.innerHTML = '';
 
-        // Populate the table with the top 10 users and their prizes
-        top10Users.forEach((user, index) => {
+        // Populate the table with the top 15 users and their prizes
+        top15Users.forEach((user, index) => {
             const row = document.createElement('tr');
 
             const rankCell = document.createElement('td');
@@ -63,15 +50,15 @@ async function fetchAndDisplayLeaderboard() {
             row.appendChild(rankCell);
 
             const usernameCell = document.createElement('td');
-            usernameCell.textContent = user.username;
+            usernameCell.textContent = user.userId; // Change to the appropriate field
             row.appendChild(usernameCell);
 
             const wagerCell = document.createElement('td');
-            wagerCell.textContent = user.totalWager.toFixed(2);
+            wagerCell.textContent = user.wagerDifference.toFixed(2); // Change to the appropriate field
             row.appendChild(wagerCell);
 
             const prizeCell = document.createElement('td');
-            prizeCell.textContent = prizes[index]; // Add the prize value
+            prizeCell.textContent = prizes[index] || '$0'; // Use default if no prize
             row.appendChild(prizeCell);
 
             tbody.appendChild(row);
