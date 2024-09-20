@@ -15,7 +15,7 @@ async function fetchAndDisplayLeaderboard() {
                 "invitationCode": "sav",
                 "accessKey": "a1uY00IAM6surRWE",
                 "beginTimestamp": 0, // Replace with your required timestamp
-                "endTimestamp": 0    // Replace with your required timestamp
+                "endTimestamp": 100000000000    // Replace with your required timestamp
             })
         });
 
