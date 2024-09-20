@@ -22,7 +22,7 @@ async function fetchAndDisplayLeaderboard() {
             throw new Error('Invalid data structure: response is not an array');
         }
 
-        // Sort users by their wager in descending order
+        // Sort users by their wager difference in descending order
         data.sort((a, b) => b.wagerDifference - a.wagerDifference); // Adjust based on your API response fields
 
         // Get the top 15 users
@@ -49,9 +49,9 @@ async function fetchAndDisplayLeaderboard() {
             rankCell.textContent = index + 1;
             row.appendChild(rankCell);
 
-            const usernameCell = document.createElement('td');
-            usernameCell.textContent = user.userId; // Change to the appropriate field
-            row.appendChild(usernameCell);
+            const nameCell = document.createElement('td');
+            nameCell.textContent = user.name; // Change to the appropriate field for the name
+            row.appendChild(nameCell);
 
             const wagerCell = document.createElement('td');
             wagerCell.textContent = user.wagerDifference.toFixed(2); // Change to the appropriate field
