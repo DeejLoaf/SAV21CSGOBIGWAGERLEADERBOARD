@@ -30,8 +30,8 @@ async function fetchAndDisplayLeaderboard() {
 
         // Define the updated prize values for the top 10 users
         const prizes = [
-            '$7000', '$3500', '$2000', '$800', '$600', 
-            '$400', '$250', '$150', '$150', '$100'
+            '$5000', '$3750', '$2500', '$1250', '$1000', 
+            '$625', '$375', '$250', '$125', '$125'
         ];
 
         // Get the table body element
