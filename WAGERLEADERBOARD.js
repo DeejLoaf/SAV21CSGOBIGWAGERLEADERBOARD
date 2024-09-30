@@ -25,14 +25,13 @@ async function fetchAndDisplayLeaderboard() {
         // Sort users by their wager difference in descending order
         data.sort((a, b) => b.wagerDifference - a.wagerDifference); // Adjust based on your API response fields
 
-        // Get the top 15 users
-        const top15Users = data.slice(0, 15);
+        // Get the top 10 users (instead of top 15)
+        const top10Users = data.slice(0, 10);
 
-        // Define the prize values for the top 15 users
+        // Define the prize values for the top 10 users
         const prizes = [
             '$2100', '$1000', '$650', '$400', '$250', 
-            '$175', '$100', '$90', '$75', '$50', 
-            '$50', '$20', '$20', '$10', '$10'
+            '$175', '$100', '$90', '$75', '$50'
         ];
 
         // Get the table body element
@@ -41,8 +40,8 @@ async function fetchAndDisplayLeaderboard() {
         // Clear any existing rows
         tbody.innerHTML = '';
 
-        // Populate the table with the top 15 users and their prizes
-        top15Users.forEach((user, index) => {
+        // Populate the table with the top 10 users and their prizes
+        top10Users.forEach((user, index) => {
             const row = document.createElement('tr');
 
             const rankCell = document.createElement('td');
@@ -54,7 +53,13 @@ async function fetchAndDisplayLeaderboard() {
             row.appendChild(nameCell);
 
             const wagerCell = document.createElement('td');
-            const wagerDifference = Number(user.wagerDifference); // Convert to number
+            let wagerDifference = user.wagerDifference; // Get the wagerDifference
+
+            // Log the wagerDifference for debugging
+            console.log(`User: ${user.name}, wagerDifference:`, wagerDifference, typeof wagerDifference);
+
+            // Check if wagerDifference is a number or can be converted to a number
+            wagerDifference = Number(wagerDifference); // Convert to number
 
             // Check if it's a valid number
             if (!isNaN(wagerDifference)) {
@@ -79,4 +84,3 @@ async function fetchAndDisplayLeaderboard() {
 
 // Call the function to fetch and display leaderboard on page load
 fetchAndDisplayLeaderboard();
-
