@@ -1,4 +1,4 @@
-// Define the API URL for your Google Sheets data
+// Define the API URL for your Google Sheets data 
 const apiUrl = 'https://script.googleusercontent.com/macros/echo?user_content_key=I1yqw0C6Yo21WhD5KGlXs5NR1k3nqfvKmhLxSbCm99XJlP5KrsZGPwWSsMjKox2hSCSm8DKLv00OfNHenXAIjazPJk6ldyc7m5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnKq0DlNu78yxdgb-rrINvyBMTu_DnYPEPdYJUP3rVrBwPegCzs_8FQz22k7ZzEoAl-hvlUidHcLBu8tgrp4KrEcXSLoOc5Duqg&lib=M-oc_ToWrXe3ZGRbqKXnu3wfY0QbVsGWL'; // Replace with your web app URL
 
 async function fetchAndDisplayLeaderboard() {
@@ -28,10 +28,10 @@ async function fetchAndDisplayLeaderboard() {
         // Get the top 10 users (instead of top 15)
         const top10Users = data.slice(0, 10);
 
-        // Define the prize values for the top 10 users
+        // Define the updated prize values for the top 10 users
         const prizes = [
-            '$2100', '$1000', '$650', '$400', '$250', 
-            '$175', '$100', '$90', '$75', '$50'
+            '$7000', '$3500', '$2000', '$800', '$600', 
+            '$400', '$250', '$150', '$150', '$100'
         ];
 
         // Get the table body element
@@ -63,7 +63,7 @@ async function fetchAndDisplayLeaderboard() {
 
             // Check if it's a valid number
             if (!isNaN(wagerDifference)) {
-                wagerCell.textContent = wagerDifference.toFixed(2); // Use toFixed if it's a valid number
+                wagerCell.textContent = `$${wagerDifference.toFixed(2)}`; // Add dollar sign and use toFixed if it's a valid number
             } else {
                 wagerCell.textContent = 'N/A'; // Display 'N/A' if it's not a valid number
             }
@@ -84,3 +84,4 @@ async function fetchAndDisplayLeaderboard() {
 
 // Call the function to fetch and display leaderboard on page load
 fetchAndDisplayLeaderboard();
+
