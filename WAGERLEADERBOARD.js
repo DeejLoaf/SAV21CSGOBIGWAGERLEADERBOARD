@@ -54,7 +54,14 @@ async function fetchAndDisplayLeaderboard() {
             row.appendChild(nameCell);
 
             const wagerCell = document.createElement('td');
-            wagerCell.textContent = user.wagerDifference.toFixed(2); // Change to the appropriate field
+            const wagerDifference = Number(user.wagerDifference); // Convert to number
+
+            // Check if it's a valid number
+            if (!isNaN(wagerDifference)) {
+                wagerCell.textContent = wagerDifference.toFixed(2); // Use toFixed if it's a valid number
+            } else {
+                wagerCell.textContent = 'N/A'; // Display 'N/A' if it's not a valid number
+            }
             row.appendChild(wagerCell);
 
             const prizeCell = document.createElement('td');
@@ -72,3 +79,4 @@ async function fetchAndDisplayLeaderboard() {
 
 // Call the function to fetch and display leaderboard on page load
 fetchAndDisplayLeaderboard();
+
