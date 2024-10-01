@@ -1,5 +1,5 @@
 // Define the API URL for your Google Sheets data 
-const apiUrl = 'https://script.googleusercontent.com/macros/echo?user_content_key=I1yqw0C6Yo21WhD5KGlXs5NR1k3nqfvKmhLxSbCm99XJlP5KrsZGPwWSsMjKox2hSCSm8DKLv00OfNHenXAIjazPJk6ldyc7m5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnKq0DlNu78yxdgb-rrINvyBMTu_DnYPEPdYJUP3rVrBwPegCzs_8FQz22k7ZzEoAl-hvlUidHcLBu8tgrp4KrEcXSLoOc5Duqg&lib=M-oc_ToWrXe3ZGRbqKXnu3wfY0QbVsGWL'; // Replace with your web app URL
+const apiUrl = 'https://script.googleusercontent.com/a/macros/bcgamerewards.com/echo?user_content_key=D8_mKHZE-l01bu78L7XnE8afE8gRcas48iEHbksrUKiEnS0lW7oVatKZlRs4UteL2CvrRUye-CDQvUpUcBeFdXt1AK7MlnLmOJmA1Yb3SEsKFZqtv3DaNYcMrmhZHmUMi80zadyHLKBprFhaOmYyEv5Fi9EJ8EgZjnFAkueCBXja49v4JU5efDDLvRdSRMyaKqEnxM9nnz5rz4mJxhr9_If2UyYxVLPRi9BTK8GOUXgPBZIkgXgsuxnYzAFYkbzXHuvZGyHs9Flcy6pr-Oj0FQ&lib=MrTXDmZhtezJ2YmKc4bRqSHPfFjUr1CYB'; // Replace with your web app URL
 
 async function fetchAndDisplayLeaderboard() {
     try {
