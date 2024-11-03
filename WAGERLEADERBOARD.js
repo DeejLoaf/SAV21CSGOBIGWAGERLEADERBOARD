@@ -25,13 +25,15 @@ async function fetchAndDisplayLeaderboard() {
         // Sort users by their wager difference in descending order
         data.sort((a, b) => b.wagerDifference - a.wagerDifference); // Adjust based on your API response fields
 
-        // Get the top 10 users (instead of top 15)
-        const top10Users = data.slice(0, 10);
+        // Get the top 20 users (instead of top 10)
+        const top20Users = data.slice(0, 20);
 
-        // Define the updated prize values for the top 10 users
+        // Define the updated prize values for the top 20 users
         const prizes = [
-            '$5000', '$3750', '$2500', '$1250', '$1000', 
-            '$625', '$375', '$250', '$125', '$125'
+            '$7000', '$4500', '$2750', '$1750', '$1250', 
+            '$800', '$600', '$400', '$150', '$150', 
+            '$100', '$75', '$75', '$75', '$75', 
+            '$50', '$50', '$50', '$50', '$50'
         ];
 
         // Get the table body element
@@ -40,8 +42,8 @@ async function fetchAndDisplayLeaderboard() {
         // Clear any existing rows
         tbody.innerHTML = '';
 
-        // Populate the table with the top 10 users and their prizes
-        top10Users.forEach((user, index) => {
+        // Populate the table with the top 20 users and their prizes
+        top20Users.forEach((user, index) => {
             const row = document.createElement('tr');
 
             const rankCell = document.createElement('td');
@@ -84,4 +86,3 @@ async function fetchAndDisplayLeaderboard() {
 
 // Call the function to fetch and display leaderboard on page load
 fetchAndDisplayLeaderboard();
-
