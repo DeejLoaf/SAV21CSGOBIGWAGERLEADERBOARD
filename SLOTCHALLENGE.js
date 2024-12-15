@@ -34,7 +34,7 @@
             tbody.innerHTML = '';
 
             // Populate the table with the fetched data
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < 5; i++) {
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${i + 1}</td>
