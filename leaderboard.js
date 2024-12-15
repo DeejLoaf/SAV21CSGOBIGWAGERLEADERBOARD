@@ -50,7 +50,7 @@ async function fetchData() {
         monthlyWagers.sort((a, b) => b.monthlyWager - a.monthlyWager);
 
         // Update the leaderboard
-        updateLeaderboard(monthlyWagers.slice(0, 10)); // Top 10 users
+        updateLeaderboard(monthlyWagers.slice(0, 5)); // Top 10 users
     } catch (error) {
         console.error('Error fetching data:', error);
     }
